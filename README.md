@@ -16,6 +16,8 @@ https://atlasrider.github.io/cinemagraphic-wallpaper/
 Mac OS X Usage
 --------------
 
+![Example](https://raw.githubusercontent.com/AtlasRider/cinemagraphic-wallpaper/master/example.gif)
+
 1. Install this screensaver: https://github.com/liquidx/webviewscreensaver
 2. Configure screen saver with this URL: https://atlasrider.github.io/cinemagraphic-wallpaper/
 3. Run this command to run screensaver service as your background (also in start-osx.sh):
