@@ -1,0 +1,60 @@
+<html>
+<head>
+  <style type="text/css">
+    body {
+      background-color: #000000;
+      margin:0;
+      overflow: hidden;
+    }
+    .video {
+      display: block;
+      margin:auto;
+    }
+  </style>
+
+  <script type="application/javascript">
+    var videoIds = [ '2nqluwh', '0GOWl5A', 'jOYWlbW', 'n9r9mDD',
+    'MvK16Xb', 's4Fqur6', 'qFP0gCT', 's7FVp0X',
+    'avYcXwL', 'UkIGHlJ', 'EKCTeK0', 'MGNI4bb', 'PBKRrEK',
+    '479wS6S'];
+
+    // hYbFIpl, OO7JRkb, s4Fqur6, PSvt5gx, tE6lgYq, vGleYBr, 8JKZrGt, 4CUMx3g, Pyl9FvB, WgPSjdw, 88ry067, BeDypDa
+    // qqGwsmp, ykuMF9o, uH0GdMA, h7EfS7O, B3RCPZ4, q0lfJ9P, KhWwm6G, rHsOJQV, wE6pefX, YwKgyjS, CmCtETl, 4xYMSnw
+    // eZBjqO6, RdNeBHI, MC96RhA
+    //videoIds = [ 'BeDypDa'];
+    var randomId = videoIds[Math.floor(Math.random()*videoIds.length)];
+
+    function loadVideo(video, id) {
+      video.setAttribute('poster', 'http://i.imgur.com/' + id + '.jpg');
+      var videoSource = document.getElementById('videosource');
+      video.setAttribute('src', 'http://i.imgur.com/' + id + '.mp4');
+    }
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+      var video = document.getElementById('video');
+      video.addEventListener('loadeddata', function() {
+        video.style.height = null;
+        video.style.width = null;
+        var videoHeight = video.getBoundingClientRect().height;
+        //console.log(videoHeight);
+        var videoWidth = video.getBoundingClientRect().width;
+        if(videoWidth >= videoHeight) {
+          video.style.width = '100%';
+          //video.style.marginTop = (window.innerHeight - videoHeight) / 2;
+        } else {
+          video.style.height = '100%';
+        }
+      }, false);
+
+      loadVideo(video, randomId);
+    });
+   </script>
+</head>
+
+<body>
+  <video id="video" poster="" preload="auto" autoplay="autoplay" muted="muted" loop="loop" class="video">
+    <!-- <source src="http://i.imgur.com/0GOWl5A.mp4" type="video/mp4"> -->
+    <source id="videosource" src="" type="video/mp4">
+  </video>
+</body>
+</html>
