@@ -13,47 +13,61 @@
   </style>
 
   <script type="application/javascript">
-    var videoIds = [ '2nqluwh', '0GOWl5A', 'jOYWlbW', 'n9r9mDD',
-    'MvK16Xb', 's4Fqur6', 'qFP0gCT', 's7FVp0X',
-    'avYcXwL', 'UkIGHlJ', 'EKCTeK0', 'MGNI4bb', 'PBKRrEK',
-    '479wS6S'];
+    var videoIds = [
+    '2nqluwh', '0GOWl5A', 'jOYWlbW', 'n9r9mDD',
+    'MvK16Xb', 's4Fqur6', 's7FVp0X',
+    'avYcXwL', 'UkIGHlJ', 'EKCTeK0', 'MGNI4bb',
+    'hYbFIpl', 'OO7JRkb', 's4Fqur6', 'PSvt5gx',
+    'tE6lgYq', 'vGleYBr', '8JKZrGt', '4CUMx3g', 'Pyl9FvB',
+    'WgPSjdw', '88ry067', 'BeDypDa', 'qqGwsmp', 'ykuMF9o',
+    'uH0GdMA', 'h7EfS7O', 'B3RCPZ4', 'q0lfJ9P', 'KhWwm6G',
+    'rHsOJQV', 'wE6pefX', 'YwKgyjS', 'CmCtETl',
+    'eZBjqO6', 'RdNeBHI', 'MC96RhA'];
 
-    // hYbFIpl, OO7JRkb, s4Fqur6, PSvt5gx, tE6lgYq, vGleYBr, 8JKZrGt, 4CUMx3g, Pyl9FvB, WgPSjdw, 88ry067, BeDypDa
-    // qqGwsmp, ykuMF9o, uH0GdMA, h7EfS7O, B3RCPZ4, q0lfJ9P, KhWwm6G, rHsOJQV, wE6pefX, YwKgyjS, CmCtETl, 4xYMSnw
-    // eZBjqO6, RdNeBHI, MC96RhA
-    //videoIds = [ 'BeDypDa'];
-    var randomId = videoIds[Math.floor(Math.random()*videoIds.length)];
+    var randomIndex = Math.floor(Math.random()*videoIds.length);
+    //randomIndex = 30;
 
     function loadVideo(video, id) {
-      video.setAttribute('poster', 'http://i.imgur.com/' + id + '.jpg');
+      var videoId = videoIds[randomIndex];
+      video.setAttribute('poster', 'http://i.imgur.com/' + videoId + '.jpg');
       var videoSource = document.getElementById('videosource');
-      video.setAttribute('src', 'http://i.imgur.com/' + id + '.mp4');
+      video.setAttribute('src', 'http://i.imgur.com/' + videoId + '.mp4');
+    }
+
+    function fillScreen(video) {
+      video.style.height = null;
+      video.style.width = null;
+      var videoHeight = video.getBoundingClientRect().height;
+      var videoWidth = video.getBoundingClientRect().width;
+
+      if(videoWidth >= videoHeight) {
+        video.style.width = '100%';
+        var newVideoHeight = video.getBoundingClientRect().height;
+        video.style.marginTop = (window.innerHeight - newVideoHeight) / 2;
+      } else {
+        video.style.height = '100%';
+      }
+    }
+
+    function next() {
+        randomIndex++;
+        if(randomIndex>=videoIds.length) randomIndex = 0;
+        loadVideo(document.getElementById('video'), randomIndex);
     }
 
     document.addEventListener("DOMContentLoaded", function(event) {
       var video = document.getElementById('video');
       video.addEventListener('loadeddata', function() {
-        video.style.height = null;
-        video.style.width = null;
-        var videoHeight = video.getBoundingClientRect().height;
-        //console.log(videoHeight);
-        var videoWidth = video.getBoundingClientRect().width;
-        if(videoWidth >= videoHeight) {
-          video.style.width = '100%';
-          //video.style.marginTop = (window.innerHeight - videoHeight) / 2;
-        } else {
-          video.style.height = '100%';
-        }
+        fillScreen(video);
       }, false);
-
-      loadVideo(video, randomId);
+      loadVideo(video, randomIndex);
     });
    </script>
 </head>
 
 <body>
+  <a href="javascript:next()">Next</a>
   <video id="video" poster="" preload="auto" autoplay="autoplay" muted="muted" loop="loop" class="video">
-    <!-- <source src="http://i.imgur.com/0GOWl5A.mp4" type="video/mp4"> -->
     <source id="videosource" src="" type="video/mp4">
   </video>
 </body>
