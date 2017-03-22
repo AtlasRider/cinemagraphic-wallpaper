@@ -1,5 +1,6 @@
 <html>
 <head>
+  <meta http-equiv="refresh" content="300">
   <style type="text/css">
     body {
       background-color: #000000;
@@ -20,12 +21,11 @@
     'hYbFIpl', 'OO7JRkb', 's4Fqur6', 'PSvt5gx',
     'tE6lgYq', 'vGleYBr', '8JKZrGt', '4CUMx3g', 'Pyl9FvB',
     'WgPSjdw', '88ry067', 'BeDypDa', 'qqGwsmp', 'ykuMF9o',
-    'uH0GdMA', 'h7EfS7O', 'B3RCPZ4', 'q0lfJ9P', 'KhWwm6G',
+    'uH0GdMA', 'h7EfS7O', 'q0lfJ9P', 'KhWwm6G',
     'rHsOJQV', 'wE6pefX', 'YwKgyjS', 'CmCtETl',
     'eZBjqO6', 'RdNeBHI', 'MC96RhA', 'Mn4ObKs', 'eCM2LAb'];
 
     var randomIndex = Math.floor(Math.random()*videoIds.length);
-    //randomIndex = 30;
 
     function loadVideo(video, id) {
       var videoId = videoIds[randomIndex];
@@ -61,11 +61,12 @@
         fillScreen(video);
       }, false);
       loadVideo(video, randomIndex);
+
     });
    </script>
 </head>
 
-<body>
+<body onclick="javascript:next()">
   <!-- <a href="javascript:next()">Next</a> -->
   <video id="video" poster="" preload="auto" autoplay="autoplay" muted="muted" loop="loop" class="video">
     <source id="videosource" src="" type="video/mp4">
