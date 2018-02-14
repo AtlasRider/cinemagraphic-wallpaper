@@ -26,4 +26,8 @@ Mac OS X Usage
 /System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine -background
 ```
 
+Note
+- - -
+Run local webserver for testing
 
+`python -m SimpleHTTPServer 8000`

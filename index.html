@@ -60,13 +60,34 @@
         loadVideo(document.getElementById('video'), randomIndex);
     }
 
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }    
+
+    function checkForReload() {
+      var param = getParameterByName("t");
+      if(param) {
+        var reloadInterval = parseInt(param)*1000;
+        setTimeout(function() {
+          location.reload();
+        }, reloadInterval);
+      }
+    }
+
     document.addEventListener("DOMContentLoaded", function(event) {
       var video = document.getElementById('video');
       video.addEventListener('loadeddata', function() {
         fillScreen(video);
       }, false);
+      
       loadVideo(video, randomIndex);
-
+      checkForReload();
     });
    </script>
 </head>
