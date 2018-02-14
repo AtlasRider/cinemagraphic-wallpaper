@@ -9,9 +9,13 @@ Loads a few favorite cinemagraphic of mine and stretches it full screen. If you 
 Example
 -------
 
-Point your browser here for an example, and keep reloading:
+Point your browser here for an example:
 
 https://atlasrider.github.io/cinemagraphic-wallpaper/
+
+Have it reload every 60 seconds like so:
+
+https://atlasrider.github.io/cinemagraphic-wallpaper/?t=60
 
 Mac OS X Usage
 --------------
