@@ -12,31 +12,26 @@
       margin:auto;
     }
   </style>
-
+  
+  <script src="data.js" type="application/javascript"></script>
   <script type="application/javascript">
-    var videoIds = [
-    '2nqluwh', '0GOWl5A', 'jOYWlbW', 'n9r9mDD',
-    'MvK16Xb', 's4Fqur6', 's7FVp0X', 'tAgCSFf',
-    'avYcXwL', 'UkIGHlJ', 'EKCTeK0',
-    'hYbFIpl', 'OO7JRkb', 's4Fqur6', 'PSvt5gx',
-    'tE6lgYq', 'vGleYBr', '8JKZrGt', '4CUMx3g', 
-    'WgPSjdw', '88ry067', 'BeDypDa', 'qqGwsmp', 
-    'uH0GdMA', 'h7EfS7O', 'q0lfJ9P', 'KhWwm6G',
-    'rHsOJQV', 'wE6pefX', 'YwKgyjS', 'CmCtETl',
-    'eZBjqO6', 'RdNeBHI', 'MC96RhA', 'Mn4ObKs', 
-    'eCM2LAb', 'WoAWpc5', 'Pyl9FvB', 'ykuMF9o',
-    'NmmHA3C', 'YZqaJwq', '1zF9oML',
-    'Mruwb5I', '5gjRSmB', '0Epd26L', 'w5wuzLf', 
-    'r7bHpWw', 'Qbbt15e', 'ZqCkRQr',
-    'CLywvG1', '38IL7Uo'];
-
-    var randomIndex = Math.floor(Math.random()*videoIds.length);
-
-    function loadVideo(video, id) {
-      var videoId = videoIds[randomIndex];
-      video.setAttribute('poster', 'http://i.imgur.com/' + videoId + '.jpg');
+    function loadVideo(url) {
       var videoSource = document.getElementById('videosource');
-      video.setAttribute('src', 'http://i.imgur.com/' + videoId + '.mp4');
+      video.setAttribute('src', url);
+    }
+
+    function getRandomVideoUrl(json) {
+      var urls = [];
+      if(!json.data) {
+        console.error("Data attribute not found");
+        return;
+      } 
+
+      json.data.forEach(element => {
+        urls.push(element.mp4);
+      });
+      var randomIndex = Math.floor(Math.random()*urls.length);
+      return urls[randomIndex];
     }
 
     function fillScreen(video) {
@@ -52,12 +47,6 @@
       } else {
         video.style.height = '100%';
       }
-    }
-
-    function next() {
-        randomIndex++;
-        if(randomIndex>=videoIds.length) randomIndex = 0;
-        loadVideo(document.getElementById('video'), randomIndex);
     }
 
     function getParameterByName(name, url) {
@@ -80,20 +69,39 @@
       }
     }
 
+    function getVideos() {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+          if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+            if (xmlhttp.status == 200) {
+                var json = JSON.parse(xmlhttp.responseText);
+                if(json) {
+                  loadVideo(getRandomVideoUrl(json));
+                } else {
+                  console.error("Error parsing JSON");
+                }
+                
+            }
+          }
+      };
+      xmlhttp.open("GET", "https://api.imgur.com/3/album/hl0ij/images", true);
+      xmlhttp.setRequestHeader("Authorization", "Client-ID 0cf4f16d89b0e12");
+      xmlhttp.send();
+    }
+
     document.addEventListener("DOMContentLoaded", function(event) {
       var video = document.getElementById('video');
       video.addEventListener('loadeddata', function() {
         fillScreen(video);
       }, false);
       
-      loadVideo(video, randomIndex);
+      getVideos();
       checkForReload();
     });
    </script>
 </head>
 
-<body onclick="javascript:next()">
-  <!-- <a href="javascript:next()">Next</a> -->
+<body onclick="javascript:location.reload();">
   <video id="video" poster="" preload="auto" autoplay="autoplay" muted="muted" loop="loop" class="video">
     <source id="videosource" src="" type="video/mp4">
   </video>
